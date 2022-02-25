@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap')
+
+$primaryColor: #F6F7F5
+$secondaryColor: #1a1a1f
+$white : #ffffff
+$inputColor: #f7f7f7f3
+$btnColor: #1a1a1f
+
+html 
+    scrollbar-width: none
+
+::-webkit-scrollbar 
+    width: 0px
+
+body 
+    background: linear-gradient(to right, rgba(26, 25, 31, 0.5), rgba(26, 25, 31, 0.5)), url(./assets/hero.jpg)
+    -webkit-background-size: cover
+    -moz-background-size: cover
+    -o-background-size: cover
+    background-size: cover
+    background-attachment: fixed
+    font-family: 'Quicksand', sans-serif
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+    -webkit-font-smoothing: antialiased;
+
+.cover 
+    width: 100vw
+    height: 90vh
+    color: $primaryColor
+    vertical-align: middle
+    display: table-cell
+    animation: transitionIn 0.2s
+
+    &.covertext
+        padding-left: 1.5em
+        font-weight: bold
+
+.tray
+    background: $primaryColor
+    color: $secondaryColor
+    border-radius: 4px
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .2), 0 3px 3px 0 rgba(0, 0, 0, .2)
+    margin-bottom: 10px
+    
+.lead
+    font-size: 120%
+    font-weight: bold
+
+.card,
+.card-header,
+.card-footer
+    background-color: $primaryColor
+    color: $secondaryColor
+    margin: 0.5em 0em 0.5em 0em
+    font-weight: bold
+    border: none
+    border-radius: 4px
+    height: 300px
+
+.box
+    top: 54%
+    left: 50%
+    position: absolute
+    transform: translate(-50%,-50%)
+    padding-left: 20px
+    box-sizing: border-box
+    padding: 27px
+    background: $white
+    width: 315px
+    color: $secondaryColor
+    font-weight: bold
+    border-radius: 4px
+    text-align: left
+
+    &head
+        font-size: 170%
+        letter-spacing: 0.1rem
+        padding-left: 0.7rem
+
+.btn
+    border: none
+    background: $btnColor
+    font-weight: bold
+    border-radius: 50px
+    padding-top: 0.7rem
+    padding-bottom: 0.7rem
+    padding-right: 1.5rem
+    padding-left: 1.5rem
+    animation: transitionIn 0.5s
+    margin-right: 1rem
+    margin-bottom: 1rem
+    color: $white
+
+    &:hover
+        color: $white
+
+a,
+a:hover,
+a:focus,
+a:active
+    color: $secondaryColor
+    text-decoration: none
+
+    &.boxlink
+        color: $secondaryColor
+        text-decoration: none
+
+input
+    outline: 0
+    width: 100%
+    height: 50px
+    border: 1px dashed #c8cbcc
+    border-radius: 50px
+    background-color: $inputColor
+    color: $secondaryColor
+    margin: 5px 0 15px
+    padding-left: 1.5rem
+    box-sizing: border-box
+    font-size: 14px
+    animation: transitionIn 0.5s
+    font-weight: bolder
+
+input:focus
+    border: 1px dashed $secondaryColor
+
+.form-control
+    background-color: $secondaryColor
+    color: $white
+    border-radius: 50px
+    border: none
+
+#alert 
+    color: $secondaryColor
+    text-align: center
+    font-weight: bold
+    font-size: 1rem
+    animation: transitionIn 0.5s
+
+.fas
+    padding-left: 0.6rem
+    padding-right: 0.6rem
+    cursor: pointer
+
+.fa-2x
+    padding: 1.2rem 1.5rem 1.2rem 1.5rem
+
+.navbar 
+    background-color: $primaryColor
+    z-index: 2
+    padding: 1.4rem
+    font-weight: bold
+    box-shadow: 0 5px 5px rgba(0,0,0,.14);
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus 
+    outline: none
+    box-shadow: none
+
+@keyframes transitionIn 
+    from 
+        opacity: 0
+        transform: rotateX(-10deg)
+    
+    to 
+        opacity: 1
+        transform: rotateX(0)
+
+@media only screen and (max-width: 999px) 
+    .lead
+        font-size: 90%
+
+.col-lg-4,
+.col-lg-12
+    margin-top: 2rem
+
+.container 
+    min-width: 90%
+
+.progress
+    border-radius: 50px
+
+.table 
+    text-align: center
+    background: $primaryColor
+    color: $secondaryColor
+    font-weight: bold
+
+.table > tbody > tr > td 
+     vertical-align: middle
