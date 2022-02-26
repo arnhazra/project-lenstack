@@ -34,6 +34,18 @@ const AnalyticsSchema = new mongoose.Schema
         required: true
     },
 
+    ipaddr:
+    {
+        type: String,
+        required: true
+    },
+    
+    geolocation: 
+    {
+        type: String,
+        required: true
+    },
+
     date:
     {
         type: Date,

@@ -189,6 +189,8 @@ const ViewProject: React.FC<any> = () =>
                 <td>{ item.component }</td>
                 <td>{ item.event }</td>
                 <td>{ item.info }</td>
+                <td>{ item.ipaddr }</td>
+                <td>{ item.geolocation }</td>
             </tr>
         )
     })
@@ -239,6 +241,8 @@ const ViewProject: React.FC<any> = () =>
                                         <th>Component</th>
                                         <th>Event</th>
                                         <th>Info</th>
+                                        <th>IP Address</th>
+                                        <th>Geolocation</th>
                                     </tr>
                                 </thead>
                                 <tbody>

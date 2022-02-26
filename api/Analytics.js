@@ -1,7 +1,7 @@
 //Import Statements
 const express = require('express')
 const { check, validationResult } = require('express-validator')
-const geoip = require('geoip-lite')
+const superagent = require('superagent')
 const auth = require('../middlewares/auth')
 const Analytics = require('../models/Analytics')
 const Project = require('../models/Project')
@@ -20,8 +20,8 @@ router.post
 
     async(req, res) =>
     {
-        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
-        const geo = geoip.lookup(ip)
+        const ipaddr = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+        let geolocation = ' '
         const errors = validationResult(req)
 
         if(!errors.isEmpty())
@@ -42,10 +42,24 @@ router.post
                 {
                     if(req.headers.referer.toString().includes(project.authorizeduri))
                     {
+                        const response = await superagent.get(`http://ip-api.com/json/${ipaddr}`)
+                        if(response.body.status === 'success')
+                        {
+                            const country = response.body.country || 'Not Found'
+                            const region = response.body.regionName || ' '
+                            const city = response.body.city || ' '
+                            geolocation = `${city}, ${region}, ${country}`
+                        }
+
+                        else
+                        {
+                            geolocation = 'Not Found'
+                        }
+
                         const creator = project.creator
-                        let analytics = new Analytics({ creator, projectid, component, event, info })
+                        let analytics = new Analytics({ creator, projectid, component, event, info, ipaddr, geolocation })
                         await analytics.save()
-                        return res.status(200).json({ msg: 'Analytics created', ip, geo })  
+                        return res.status(200).json({ msg: 'Analytics created' })  
                     }
 
                     else
