@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Fragment, useEffect, useState } from 'react';
-import { Container, ListGroup, Row } from 'react-bootstrap';
+import { Container, ListGroup, Row, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import useSession from '../hooks/useSession';
@@ -16,7 +16,7 @@ const CreateProject: React.FC<any> = () =>
     const [state, setState] = useState({  title: '', description: '', authorizeduri: '', alert: '' })
     const navigate = useNavigate()
 
-    let handleSubmit = async(e:any) =>
+    const handleSubmit = async(e:any) =>
     {
         e.preventDefault()
         setState({ ...state, alert: 'Creating Project' })
@@ -27,6 +27,7 @@ const CreateProject: React.FC<any> = () =>
         {
             const res = await axios.post('/api/project/create', state)
             setState({ ...state, alert: res.data.msg })
+            navigate(`/project/view/${res.data.project._id}`)
         } 
 
         catch (error) 
@@ -77,7 +78,7 @@ const ProjectLibrary: React.FC<any> = () =>
 
     useEffect(() => 
     {
-        let fetchLibrary = async() =>
+        (async() =>
         {
             try 
             {
@@ -89,39 +90,10 @@ const ProjectLibrary: React.FC<any> = () =>
             {
                 navigate('/identity/signin') 
             }
-        }       
-
-        fetchLibrary()   
+        })()      
     }, [])
 
-    let handleDelete = async(id: any) =>
-    {
-        axios.defaults.headers.common['x-auth-token'] = localStorage.getItem('token')
-
-        try 
-        {
-            let projects = state.projects.filter((project:any) =>
-            {
-                return id !== project._id
-            })
-
-            setState({ ...state, projects: projects })
-            await axios.delete(`/api/project/delete/${id}`)            
-        } 
-        
-        catch (error) 
-        {
-            localStorage.removeItem('token')
-            navigate('/identity/signin') 
-        }
-    }
-
-    let projectItems = state.projects.map((item:any)=>
-    {
-        return(
-            <CardModule id={ item._id } title={ item.title } key={ item._id } />
-        )
-    })
+    const projectItems = state.projects.map((item:any) => <CardModule id={ item._id } title={ item.title } key={ item._id } />)
 
     //JSX
     if(session.hasError)
@@ -138,6 +110,10 @@ const ProjectLibrary: React.FC<any> = () =>
                 return(
                     <Fragment>
                         <NavModule/>
+                        <div className="box">
+                            <p className="boxhead">No Projects</p>
+                            <Link to="/project/create" className="btn">Create Project<i className="fas fa-chevron-right"></i></Link>
+                        </div>
                     </Fragment>
                 ) 
             }
@@ -169,13 +145,13 @@ const ViewProject: React.FC<any> = () =>
     //LOGIC
     const session = useSession()
     const params = useParams()
-    const [state, setState] = useState({ id: '', title: '', description: '', authorizeduri: '', date: '', isLoaded: false, error: false })
+    const id = params.id
+    const [state, setState] = useState({ id: '', title: '', description: '', authorizeduri: '', date: '', isLoaded: false, error: false, displayTable: false })
+    const [analytics, setAnalytics] = useState([])
 
     useEffect(() => 
     {
-        let id = params.id
-
-        let fetchProject = async() =>
+        (async() =>
         {
             try 
             {
@@ -187,10 +163,35 @@ const ViewProject: React.FC<any> = () =>
             {
                 setState({ ...state, error: true, isLoaded: true }) 
             }
-        } 
-
-        fetchProject()
+        })()
     }, [])
+
+    const displayAnalytics = async() =>
+    {
+        try 
+        {
+            const response = await axios.get(`/api/analytics/library/${id}`)
+            setAnalytics(response.data)
+            setState({ ...state, displayTable: true })
+        } 
+        
+        catch (error) 
+        {
+            console.log(error)
+        }
+    }
+
+    const analyticsData = analytics.map((item:any) => 
+    {
+        return(
+            <tr key={ item._id }>
+                <td>{ item.date.slice(0,10) }</td>
+                <td>{ item.component }</td>
+                <td>{ item.event }</td>
+                <td>{ item.info }</td>
+            </tr>
+        )
+    })
 
     //JSX
     if(session.hasError)
@@ -202,7 +203,7 @@ const ViewProject: React.FC<any> = () =>
     {
         if(state.error)
         {
-            
+            return(<ErrorModule />)
         }
     
         else
@@ -220,7 +221,30 @@ const ViewProject: React.FC<any> = () =>
                                 <p className='lead fw-bold text-justify' style={{ overflowWrap: 'break-word' }}>Description: { state.description }</p><br/>
                                 <Link to={`/project/update/${state.id}`} className='btn'>Update Project<i className='fas fa-chevron-right'></i></Link>
                                 <Link to={`/project/delete/${state.id}`} className='btn'>Delete Project<i className='fas fa-chevron-right'></i></Link>
+                                <button className='btn' onClick={ displayAnalytics }>Display Analytics<i className='fas fa-chevron-right'></i></button>
                             </div>
+                            <div className="mt-4 p-5 tray">
+                                <code>
+                                    API: https://lenstack.herokuapp.com/api/analytics/new/{state.id} <br/>
+                                    HTTP Method: POST <br/>
+                                    Request Payload Body Params: component, event, Info <br/>
+                                    Request Payload Body Format: JSON <br/>
+                                    API Usage: Invoke the API from your application with the details, no need to wait for response to come. You can see the analytics created here.
+                                </code>
+                            </div>
+                            <Table responsive style={{ display: state.displayTable? "table":"none" }} variant="light">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Component</th>
+                                        <th>Event</th>
+                                        <th>Info</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    { analyticsData }
+                                </tbody>
+                            </Table>
                         </Container>
                     </Fragment>
                 )    
@@ -238,37 +262,35 @@ const UpdateProject: React.FC<any> = () =>
 {
     //LOGIC
     const session = useSession()
-    const [state, setState] = useState({ id: '', title: '', description: '', authorizeduri: '', isLoaded: false, error: false , alert: '' })
+    const [state, setState] = useState({ id: '', title: '', description: '', authorizeduri: '', isLoaded: false, hasError: false , alert: '' })
     const navigate = useNavigate()
     const params = useParams()
+    const id = params.id
 
     useEffect(() => 
     {
-        let id = params.id
-        let fetchProject = async() =>
+        (async() =>
         {
             try 
             {
                 const response = await axios.get(`/api/project/view/${id}`)
-                setState({ ...state, id: response.data.project._id, title: response.data.project.title, description: response.data.project.description, authorizeduri: response.data.project.authorizeduri, isLoaded: true })     
+                setState({ ...state, id: response.data.project._id, title: response.data.project.title, description: response.data.project.description, authorizeduri: response.data.project.authorizeduri, isLoaded: true })    
             } 
             
             catch (error) 
             {
-                setState({ ...state, error: true, isLoaded: true })  
+                setState({ ...state, hasError: true, isLoaded: true })  
             }
-        } 
-
-        fetchProject()
+        })()
     }, [])
 
-    let handleSubmit = async(e:any) =>
+    const handleSubmit = async(e:any) =>
     {
         e.preventDefault()
         axios.defaults.headers.common['x-auth-token'] = localStorage.getItem('token')
     
         setState({ ...state, alert: 'Updating Project' })
-        let id = params.id
+        const id = params.id
         
         try 
         {
@@ -300,14 +322,23 @@ const UpdateProject: React.FC<any> = () =>
 
     else
     {
-        if(state.error)
+        if(!state.isLoaded)
         {
-            
+            return(
+                <LoadingModule />
+            )
         }
-    
-        else
+
+        else 
         {
-            if(state.isLoaded)
+            if(state.hasError)
+            {
+                return(
+                    <ErrorModule />
+                )
+            }
+
+            else
             {
                 return (
                     <Fragment>
@@ -321,12 +352,7 @@ const UpdateProject: React.FC<any> = () =>
                             <button type='submit' className='btn'>Update<i className='fas fa-chevron-right'></i></button>
                         </form>
                     </Fragment>   
-                )            
-            }
-            
-            else
-            {
-                return <LoadingModule />             
+                )    
             }
         }
     }
@@ -336,20 +362,37 @@ const DeleteProject: React.FC<any> = () =>
 {
     //LOGIC
     const session = useSession()
-    const [state, setState] = useState({ useript: '', error: false , alert: '' })
+    const [state, setState] = useState({ id: '', useript: '', title: '', description: '', authorizeduri: '', isLoaded: false, hasError: false , alert: '' })
     const navigate = useNavigate()
     const params = useParams()
+    const id = params.id
 
-    let handleSubmit = async(e:any) =>
+    useEffect(() => 
     {
-        console.log(state)
+        (async() =>
+        {
+            try 
+            {
+                const response = await axios.get(`/api/project/view/${id}`)
+                setState({ ...state, id: response.data.project._id, title: response.data.project.title, description: response.data.project.description, authorizeduri: response.data.project.authorizeduri, isLoaded: true })    
+            } 
+            
+            catch (error) 
+            {
+                setState({ ...state, hasError: true, isLoaded: true })  
+            }
+        })()
+    }, [])
+
+    const handleSubmit = async(e:any) =>
+    {
         e.preventDefault()
         if(state.useript === 'Delete Project') 
         {
             axios.defaults.headers.common['x-auth-token'] = localStorage.getItem('token')
     
             setState({ ...state, alert: 'Deleting Project' })
-            let id = params.id
+            const id = params.id
             
             try 
             {
@@ -387,24 +430,36 @@ const DeleteProject: React.FC<any> = () =>
 
     else
     {
-        if(state.error)
+        if(!state.isLoaded)
         {
-            
+            return(
+                <LoadingModule />
+            )
         }
     
         else
         {
-            return (
-                <Fragment>
-                    <NavModule/>
-                    <form className='box' onSubmit={ handleSubmit } id='step1'> 
-                        <p className='boxhead'>Delete Project</p>
-                        <input type='text' name='useript' placeholder='Type "Delete Project"' onChange={ (e) => setState({ ...state, useript: e.target.value }) } autoComplete='off' required />
-                        <p id='alert'>{ state.alert }</p>
-                        <button type='submit' className='btn'>Update<i className='fas fa-chevron-right'></i></button>
-                    </form>
-                </Fragment>   
-            )
+            if(state.hasError)
+            {
+                return(
+                    <ErrorModule />
+                )
+            }
+
+            else
+            {
+                return (
+                    <Fragment>
+                        <NavModule/>
+                        <form className='box' onSubmit={ handleSubmit } id='step1'> 
+                            <p className='boxhead'>Delete Project</p>
+                            <input type='text' name='useript' placeholder='Type "Delete Project"' onChange={ (e) => setState({ ...state, useript: e.target.value }) } autoComplete='off' required />
+                            <p id='alert'>{ state.alert }</p>
+                            <button type='submit' className='btn'>Delete<i className='fas fa-chevron-right'></i></button>
+                        </form>
+                    </Fragment>   
+                )
+            }
         }
     }
 }

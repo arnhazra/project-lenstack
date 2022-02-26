@@ -31,8 +31,9 @@ const Dashboard: React.FC<any> = () =>
                             <p className='display-4 fw-bold'>Lenstack</p>
                             <p className='display-4 fw-bold'>Hey, { session.name.split(' ')[0]  }</p>
                             <p className='lead my-4 fw-bold'>
-                                Invent with purpose, Your framework, your cloud <br/>
-                                Turn your ideas into reality, Explore the products <br/>
+                                Lenstack Analytics lets you measure your <br/>
+                                application usage/traffic using API endpoints <br/>
+                                and display the analytics in your project dashboard.
                             </p>
                             <Link to='/project/create'><button className='btn'>Create Project<i className='fas fa-chevron-right'></i></button></Link>  
                             <Link to='/project/library'><button className='btn'>Project Library<i className='fas fa-chevron-right'></i></button></Link>  

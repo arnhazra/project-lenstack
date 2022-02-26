@@ -15,7 +15,7 @@ router.post
     [
         check('title', 'Title must not be empty').notEmpty(),
         check('description', 'Description must not be empty').notEmpty(),
-        check('authorizeduri', 'Authorized URI must be an URL').isURL(),
+        check('authorizeduri', 'Authorized URI must be an URL').notEmpty(),
     ],
 
     async(req, res) =>
@@ -35,7 +35,7 @@ router.post
             {
                 let project = new Project({ creator: req.id, title, description, authorizeduri })
                 await project.save()
-                return res.status(200).json({ msg: 'Project created' })  
+                return res.status(200).json({ msg: 'Project created', project })  
             } 
 
             catch (error) 
@@ -65,7 +65,6 @@ router.get
         {
             return res.status(500).json({ msg: 'Server error' })
         }
-        
     }
 )
 

@@ -19,6 +19,7 @@ Connection()
 app.use('/api/account', require('./api/Account'))
 app.use('/api/identity', require('./api/Identity'))
 app.use('/api/project', require('./api/Project'))
+app.use('/api/analytics', require('./api/Analytics'))
 app.use('/api/services/session', require('./api/Session'))
 
 
