@@ -15,7 +15,7 @@ const Home : React.FC = () =>
     }
     useEffect(() => {
       (async() => {
-          await axios.post('http://lenstack.herokuapp.com/api/analytics/new/6219eaee3bff4963f3aa6863', log)
+          await axios.post('https://lenstack.herokuapp.com/api/analytics/new/6219ece83bff4963f3aa68bd', log)
       })()
     }, [])
     

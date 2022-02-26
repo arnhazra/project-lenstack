@@ -3,7 +3,7 @@ const router = require('express').Router()
 const { check, validationResult } = require('express-validator')
 const auth = require('../middlewares/auth')
 const Project = require('../models/Project')
-const User = require('../models/User')
+const Analytics = require('../models/Analytics')
 
 //Create Project Route
 router.post
@@ -109,7 +109,7 @@ router.post
     [
         check('title', 'Title must not be empty').notEmpty(),
         check('description', 'Description must not be empty').notEmpty(),
-        check('authorizeduri', 'Authorized URI must be an URL').isURL(),
+        check('authorizeduri', 'Authorized URI must be an URL').notEmpty(),
     ],
 
     async(req, res) =>
@@ -165,6 +165,7 @@ router.delete
             if(req.id == project.creator)
             {
                 await Project.findByIdAndDelete(req.params.id)
+                await Analytics.deleteMany({ projectid: req.params.id })
                 return res.status(200).json({ msg: 'Project deleted' })
             }
 
