@@ -128,8 +128,18 @@ router.post
 
             try 
             {
-                await Project.findByIdAndUpdate(req.params.id, { title, description, authorizeduri })
-                return res.status(200).json({ msg: 'Project updated' })  
+                const project = await Project.findById(req.params.id)
+
+                if(req.id = project.creator) 
+                {
+                    await Project.findByIdAndUpdate(req.params.id, { title, description, authorizeduri })
+                    return res.status(200).json({ msg: 'Project updated' }) 
+                }
+
+                else
+                {
+                    return res.status(404).json({ msg: 'Not found' }) 
+                }
             } 
 
             catch (error) 
@@ -163,7 +173,6 @@ router.delete
             {
                 return res.status(404).json({ msg: 'Not found' })
             }
-            
         } 
 
         catch (error) 
