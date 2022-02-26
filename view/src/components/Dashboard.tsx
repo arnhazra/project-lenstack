@@ -12,12 +12,6 @@ const Dashboard: React.FC<any> = () =>
 {
     //LOGIC
     const session = useSession()
-    const [showProjectDialog, setShowProjectDialog] = useState(false)
-
-    let openCreateProjectDialog = () => 
-    {
-        setShowProjectDialog(true)
-    }
 
     //JSX
     if(session.hasError)
@@ -40,8 +34,8 @@ const Dashboard: React.FC<any> = () =>
                                 Invent with purpose, Your framework, your cloud <br/>
                                 Turn your ideas into reality, Explore the products <br/>
                             </p>
-                            <Link to='/project/create'><button className="btn" onClick={ openCreateProjectDialog }>Create Project<i className='fas fa-chevron-right'></i></button></Link>  
-                            <Link to='/project/library'><button className="btn" onClick={ openCreateProjectDialog }>Project Library<i className='fas fa-chevron-right'></i></button></Link>  
+                            <Link to='/project/create'><button className='btn'>Create Project<i className='fas fa-chevron-right'></i></button></Link>  
+                            <Link to='/project/library'><button className='btn'>Project Library<i className='fas fa-chevron-right'></i></button></Link>  
                         </div>
                     </Container>
                 </Fragment>   

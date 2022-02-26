@@ -1,21 +1,21 @@
-import { Card, Col } from 'react-bootstrap'
+import { Col, ListGroup, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-const CardModule = ({ icon, name, description, link }) => {
+const CardModule = (props) => 
+{
     return(
-        <Col xs={12} sm={12} md={6} lg={6} xl={4} key={ icon }>
-            <Link to = { link } >
-                <Card className='text-center'>     
-                    <Card.Header>
-                        <p className="boxhead" style={{ marginBottom: '60px' }}>{ name }</p>
-                        <i className={`fa-solid ${ icon } fa-3x`} style={{ marginBottom: '30px' }}></i>
-                    </Card.Header>
-                    <Card.Footer>
-                        <p className="lead">{ description }</p>
-                    </Card.Footer>
-                </Card>
-            </Link>
-        </Col>
+        <ListGroup.Item key={ props.id }>
+            <Row className='align-items-center'>
+                <Col style={{ textAlign: "left", marginTop: "12px" }}>
+                    <p className='boxhead fw-bold'>{ props.title }</p>
+                </Col>
+                <Col style={{ textAlign: "right", marginTop: "2px" }}>
+                    <Link to={ `/project/view/${props.id}` }>
+                        <i className="fa-solid fa-square-up-right fa-3x"></i>
+                    </Link>
+                </Col>
+            </Row>
+        </ListGroup.Item>
     )
 }
 
