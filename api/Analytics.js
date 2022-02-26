@@ -19,6 +19,7 @@ router.post
 
     async(req, res) =>
     {
+        let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
         const errors = validationResult(req)
 
         if(!errors.isEmpty())
@@ -42,7 +43,7 @@ router.post
                         const creator = project.creator
                         let analytics = new Analytics({ creator, projectid, component, event, info })
                         await analytics.save()
-                        return res.status(200).json({ msg: 'Analytics created', req })  
+                        return res.status(200).json({ msg: 'Analytics created', ip: ip })  
                     }
 
                     else

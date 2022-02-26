@@ -1,12 +1,24 @@
 //Import Statements
 import { Navigate, Link } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import NavModule from '../modules/NavModule'
+import axios from 'axios'
 
 //Home Component
 const Home : React.FC = () =>
 {
+    let log = {
+        component: 'home',
+        event: 'load page',
+        info: 'no info'
+    }
+    useEffect(() => {
+      (async() => {
+          await axios.post('https://lenstack.herokuapp.com/api/analytics/new/6219eaee3bff4963f3aa6863', log)
+      })()
+    }, [])
+    
     //JSX
     if(localStorage.getItem('token'))
     {
