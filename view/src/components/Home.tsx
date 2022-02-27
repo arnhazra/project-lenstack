@@ -8,17 +8,6 @@ import axios from 'axios'
 //Home Component
 const Home : React.FC = () =>
 {
-    let log = {
-        component: 'home',
-        event: 'load page',
-        info: 'no info'
-    }
-    useEffect(() => {
-      (async() => {
-          await axios.post('https://lenstack.herokuapp.com/api/analytics/new/6219ece83bff4963f3aa68bd', log)
-      })()
-    }, [])
-    
     //JSX
     if(localStorage.getItem('token'))
     {
