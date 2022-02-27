@@ -6,12 +6,14 @@ import LoadingModule from '../modules/LoadingModule'
 import useSession from '../hooks/useSession'
 import NavModule from '../modules/NavModule'
 import { Link } from 'react-router-dom'
+import greetingTime from 'greeting-time'
 
 //Dashboard Component
 const Dashboard: React.FC<any> = () => 
 {
     //LOGIC
     const session = useSession()
+    const greet = greetingTime(new Date())
 
     //JSX
     if(session.hasError)
@@ -28,12 +30,10 @@ const Dashboard: React.FC<any> = () =>
                     <NavModule />
                     <Container>
                         <div className='cover covertext'>
-                            <p className='display-4 fw-bold'>Lenstack</p>
-                            <p className='display-4 fw-bold'>Hey, { session.name.split(' ')[0]  }</p>
+                            <p className='display-4 fw-bold'>{ greet + ', ' + session.name.split(' ')[0]  }</p>
                             <p className='lead my-4 fw-bold'>
-                                Lenstack Analytics lets you measure your <br/>
-                                application usage/traffic using API endpoints <br/>
-                                and display the analytics in your project dashboard.
+                                Lenstack Analytics lets you measure your application usage/traffic <br /> 
+                                using API endpoints and display in real time on your project dashboard.
                             </p>
                             <Link to='/project/create'><button className='btn'>Create Project<i className='fas fa-chevron-right'></i></button></Link>  
                             <Link to='/project/library'><button className='btn'>Project Library<i className='fas fa-chevron-right'></i></button></Link>  

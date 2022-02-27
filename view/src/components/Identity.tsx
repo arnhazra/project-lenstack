@@ -97,50 +97,23 @@ const SignUp : React.FC = () =>
 //Sign In Component
 const SignIn : React.FC = () =>
 {
-    const [state, setState] = useState({ email: '', password: '', otp: '', hash:'', alert: '' })
+    const [state, setState] = useState({ email: '', password: '', alert: '' })
     const [show, setShow] = useState({ step1: true, step2: false })
     const history: any = useNavigate()
 
-    let getOTP = async(e: any) =>
-    {
-        e.preventDefault()
-        setState({ ...state, alert: 'Please wait' })
-
-        try 
-        {     
-            const response = await axios.post('/api/identity/signin/getotp', state)
-            setState({ ...state, hash: response.data.hash, alert: response.data.msg })
-            setShow({ step1: false, step2: true })
-        } 
-
-        catch (error: any) 
-        {
-            if(error.response)
-            {
-                setState({ ...state, alert: error.response.data.msg })
-            }
-
-            else
-            {
-                setState({ ...state, alert: 'Connection error' })
-            }
-        }
-    }
-
-
-    let login = async(e: any) =>
+    let signin = async(e: any) =>
     {
         e.preventDefault()
         setState({ ...state, alert: 'Signing in' })
 
         try 
-        {
-            const res = await axios.post('/api/identity/signin/login', state)
-            axios.defaults.headers.common['x-auth-token'] = res.data.token
-            localStorage.setItem('token', res.data.token)
+        {     
+            const response = await axios.post('/api/identity/signin', state)
+            axios.defaults.headers.common['x-auth-token'] = response.data.token
+            localStorage.setItem('token', response.data.token)
             history.push('/dashboard')
         } 
-        
+
         catch (error: any) 
         {
             if(error.response)
@@ -165,19 +138,13 @@ const SignIn : React.FC = () =>
         return (
             <Fragment>
                 <NavModule />
-                <form className='box' onSubmit = { getOTP } style={{ display: show.step1? 'block': 'none' }}>   
+                <form className='box' onSubmit = { signin } style={{ display: show.step1? 'block': 'none' }}>   
                     <p className='boxhead'>Sign In</p>
                     <input type='email' name='email' placeholder='Email Address' onChange={ (e) => setState({ ...state, email: e.target.value }) } required autoComplete = {'off'}/>
                     <input type='password' name='password' placeholder='Password' onChange={ (e) => setState({ ...state, password: e.target.value }) } required autoComplete = {'off'}/>
                     <p id='alert'>{ state.alert }</p>
-                    <button type='submit' className='btn btnsubmit'>Continue<i className='fas fa-chevron-right'></i></button><br/>
+                    <button type='submit' className='btn btnsubmit'>Sign In<i className='fas fa-chevron-right'></i></button><br/>
                     <Link to='/identity/pwreset' className='boxlink'>Forgot password? Reset here</Link>
-                </form>  
-                <form className='box' onSubmit = { login } style={{ display: show.step2? 'block': 'none' }}>   
-                    <p className='boxhead'>Sign In</p>
-                    <input type='password' name='otp' placeholder='Enter OTP sent to you' onChange={ (e) => setState({ ...state,  otp: e.target.value }) } required autoComplete = {'off'}  minLength={6} maxLength={6}/>
-                    <p id='alert'>{ state.alert }</p>
-                    <button type='submit' className='btn btnsubmit'>Sign In<i className='fas fa-chevron-right'></i></button>
                 </form>
             </Fragment>   
         )

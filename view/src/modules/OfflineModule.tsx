@@ -5,9 +5,10 @@ import React from 'react'
 const OfflineModule : React.FC = () => 
 {
     return (
-        <div className='box'>
+        <div className='box text-center'>
             <p className='boxhead'>You're offline</p> 
-            <i className='fas fa-wifi fa-6x'></i> 
+            <p className='boxhead'>Reconnecting</p> 
+            <i className='fas fa-plane fa-spin fa-5x'></i>
         </div>
     )
 }

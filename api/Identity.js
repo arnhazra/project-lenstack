@@ -130,7 +130,7 @@ router.post
 //Sign In Route - Get OTP
 router.post
 (
-    '/signin/getotp', 
+    '/signin', 
 
     [
         check('email', 'Please provide valid email').isEmail(),
@@ -165,10 +165,9 @@ router.post
 
                     if(isPasswordMatching)
                     {
-                        const otp = otpgen.generate(6, { alphabets: false, specialChars: false, upperCase: false }) 
-                        const hash = otptool.createNewOTP(email, otp, key=OTP_KEY, expiresAfter=3, algorithm='sha256')
-                        sendmail(email, otp)
-                        return res.status(200).json({ hash, msg: 'Please check OTP in email' })
+                        const payload = { id: user.id }
+                        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: 86400 })
+                        return res.status(200).json({ token })
                     }
 
                     else
@@ -178,75 +177,6 @@ router.post
                 }
             } 
 
-            catch (error) 
-            {
-                return res.status(500).json({ msg: 'Connection error' })
-            }
-        }
-    }
-)
-
-//Sign In Route - Login
-router.post
-(
-    '/signin/login',
-
-    [
-        check('email', 'Email is required').isEmail(),
-        check('password', 'Password is required').notEmpty(),
-        check('otp', 'OTP must be a 6 digit number').isLength(6),
-        check('hash', 'Invalid hash').notEmpty()
-    ],
-
-    async(req, res) =>
-    {
-        const errors = validationResult(req)
-        
-        if(!errors.isEmpty())
-        {
-            return res.status(400).json({ msg: errors.array()[0].msg })
-        }
-
-        else
-        {
-            let { email, password, otp, hash } = req.body
-
-            try 
-            {
-                let user = await User.findOne({ email })
-
-                if(!user)
-                {
-                    return res.status(401).json({ msg: 'Invalid credentials' })
-                }
-
-                else
-                {
-                    const isPasswordMatching = await bcrypt.compare(password, user.password)
-                    const isOTPValid = otptool.verifyOTP(email, otp, hash, key=OTP_KEY, algorithm='sha256')
-                    
-                    if(isPasswordMatching)
-                    {
-                        if(isOTPValid)
-                        {
-                            const payload = { id: user.id }
-                            const token = jwt.sign(payload, JWT_SECRET, { expiresIn: 86400 })
-                            return res.status(200).json({ token })
-                        }
-    
-                        else
-                        {
-                            return res.status(400).json({ msg: 'Invalid OTP' })
-                        }
-                    }
-
-                    else
-                    {
-                        return res.status(401).json({ msg: 'Invalid credentials' })
-                    }
-                }
-            } 
-            
             catch (error) 
             {
                 return res.status(500).json({ msg: 'Connection error' })

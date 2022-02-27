@@ -22,15 +22,13 @@ const Home : React.FC = () =>
                 <Container>
                     <div className='cover covertext'>
                         <p className='display-4 fw-bold'>
-                            Lenstack <br/> 
-                            Your frameworks <br/>
-                            Your analytics
+                            Your analytics, from the web <br/>
+                            on the cloud
                         </p>
                         <p className='lead my-4 fw-bold'>
-                            Limitless analytics with realtime insights. <br/> Analytics for your apps & services. <br/>Start measuring with a free account and 10 free projects.
+                            Limitless analytics with realtime insights. Analytics for your apps & services. <br/>Start measuring with a free account and 10 free projects.
                         </p>
                         <Link to ='/identity/signup' className='btn'>Get an account<i className='fas fa-chevron-right'></i></Link>
-                        <Link to ='/identity/signin' className='btn'>Sign In<i className='fas fa-chevron-right'></i></Link>
                     </div>
                 </Container>
             </Fragment> 

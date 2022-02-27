@@ -4,7 +4,6 @@ $primaryColor: #F6F7F5
 $secondaryColor: #1a1a1f
 $white : #ffffff
 $inputColor: #f7f7f7f3
-$btnColor: #1a1a1f
 $cardTextColor: #576371
 
 html 
@@ -14,7 +13,7 @@ html
     width: 0px
 
 body 
-    background: linear-gradient(to right, rgba(26, 25, 31, 0.5), rgba(26, 25, 31, 0.5)), url(./assets/hero.jpg)
+    background: linear-gradient(to right, rgba(26, 25, 31, 0.6), rgba(26, 25, 31, 0.6)), url(./assets/hero.jpg)
     -webkit-background-size: cover
     -moz-background-size: cover
     -o-background-size: cover
@@ -31,11 +30,8 @@ body
     color: $primaryColor
     vertical-align: middle
     display: table-cell
-    animation: transitionIn 0.2s
-
-    &.covertext
-        padding-left: 1.5em
-        font-weight: bold
+    text-align: center
+    animation: transitionIn 0.2s        
 
 .tray
     background: $primaryColor
@@ -78,7 +74,7 @@ body
 
 .btn
     border: none
-    background: $btnColor
+    background: $secondaryColor
     font-weight: bold
     border-radius: 50px
     padding-top: 0.7rem
@@ -205,3 +201,6 @@ textarea:focus
 
 .table > tbody > tr > td 
      vertical-align: middle
+
+code
+    color: #1d91c7

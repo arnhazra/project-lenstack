@@ -148,6 +148,11 @@ const ViewProject: React.FC<any> = () =>
     const id = params.id
     const [state, setState] = useState({ id: '', title: '', description: '', authorizeduri: '', date: '', isLoaded: false, error: false, displayTable: false })
     const [analytics, setAnalytics] = useState([])
+    let dummyRequestPayloadExample = {
+        "component": "User SignUp Component",
+        "event": "New User Signed Up",
+        "info": "Name - John Doe"
+    }
 
     useEffect(() => 
     {
@@ -167,7 +172,7 @@ const ViewProject: React.FC<any> = () =>
     }, [])
 
     const displayAnalytics = async() =>
-    {
+    { 
         try 
         {
             const response = await axios.get(`/api/analytics/library/${id}`)
@@ -229,8 +234,8 @@ const ViewProject: React.FC<any> = () =>
                                 <code>
                                     API: https://lenstack.herokuapp.com/api/analytics/new/{state.id} <br/>
                                     HTTP Method: POST <br/>
-                                    Request Payload Body Params: component, event, Info <br/>
                                     Request Payload Body Format: JSON <br/>
+                                    Request Payload Body Example: { JSON.stringify(dummyRequestPayloadExample) } <br/>
                                     API Usage: Invoke the API from your application with the details, no need to wait for response to come. You can see the analytics created here.
                                 </code>
                             </div>

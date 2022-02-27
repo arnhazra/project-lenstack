@@ -39,7 +39,7 @@ const App : React.FC = () =>
                     <Route path='/project/update/:id' element = { <UpdateProject /> } />
                     <Route path='/project/delete/:id' element = { <DeleteProject /> } />
 
-                    <Route path='/account/updatedetails' element = { <UpdateAccount /> } />
+                    <Route path='/account' element = { <UpdateAccount /> } />
                     <Route path='/account/close' element = { <CloseAccount /> } />
                     <Route path='*' element = { <ErrorModule /> } />
                 </Routes>
