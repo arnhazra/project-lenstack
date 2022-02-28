@@ -21,7 +21,7 @@ const Home : React.FC = () =>
                 <NavModule />
                 <Container>
                     <div className='cover covertext'>
-                        <p className='display-4 fw-bold'>
+                        <p className='display-1 fw-bold'>
                             Your analytics, from the web <br/>
                             on the cloud
                         </p>
