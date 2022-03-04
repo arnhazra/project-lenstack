@@ -35,7 +35,7 @@ const Dashboard: React.FC<any> = () =>
                                 Lenstack Analytics lets you measure your application usage/traffic <br /> 
                                 using API endpoints and display in real time on your project dashboard.
                             </p>
-                            <Link to='/project/create'><button className='btn'>Create Project<i className='fas fa-chevron-right'></i></button></Link>  
+                            <Link to='/project/new'><button className='btn'>New Project<i className='fas fa-chevron-right'></i></button></Link>  
                             <Link to='/project/library'><button className='btn'>Project Library<i className='fas fa-chevron-right'></i></button></Link>  
                         </div>
                     </Container>

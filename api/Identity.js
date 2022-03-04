@@ -47,8 +47,8 @@ router.post
 
                 else
                 {
-                    const otp = otpgen.generate(6, { alphabets: false, specialChars: false, upperCase: false }) 
-                    const hash = otptool.createNewOTP(email, otp, key=OTP_KEY, expiresAfter=3, algorithm='sha256')
+                    const otp = otpgen.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false }) 
+                    const hash = otptool.createNewOTP(email, otp, key=OTP_KEY, expiresAfter=5, algorithm='sha256')
                     sendmail(email,otp)
                     return res.status(200).json({ hash, msg: 'Please check OTP in email' })
                 }

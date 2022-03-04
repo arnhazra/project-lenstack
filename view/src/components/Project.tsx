@@ -9,7 +9,7 @@ import ErrorModule from '../modules/ErrorModule';
 import LoadingModule from '../modules/LoadingModule';
 import NavModule from '../modules/NavModule';
 
-const CreateProject: React.FC<any> = () => 
+const NewProject: React.FC<any> = () => 
 {
     //LOGIC
     const session = useSession()
@@ -25,7 +25,7 @@ const CreateProject: React.FC<any> = () =>
 
         try
         {
-            const res = await axios.post('/api/project/create', state)
+            const res = await axios.post('/api/project/new', state)
             setState({ ...state, alert: res.data.msg })
             navigate(`/project/view/${res.data.project._id}`)
         } 
@@ -112,7 +112,7 @@ const ProjectLibrary: React.FC<any> = () =>
                         <NavModule/>
                         <div className="box">
                             <p className="boxhead">No Projects</p>
-                            <Link to="/project/create" className="btn">Create Project<i className="fas fa-chevron-right"></i></Link>
+                            <Link to="/project/new" className="btn">New Project<i className="fas fa-chevron-right"></i></Link>
                         </div>
                     </Fragment>
                 ) 
@@ -146,7 +146,7 @@ const ViewProject: React.FC<any> = () =>
     const session = useSession()
     const params = useParams()
     const id = params.id
-    const [state, setState] = useState({ id: '', title: '', description: '', authorizeduri: '', date: '', isLoaded: false, error: false, displayTable: false })
+    const [state, setState] = useState({ id: '', title: '', description: '', authorizeduri: '', apikey: '', date: '', isLoaded: false, error: false, displayTable: false })
     const [analytics, setAnalytics] = useState([])
     let dummyRequestPayloadExample = {
         "component": "User SignUp Component",
@@ -161,7 +161,7 @@ const ViewProject: React.FC<any> = () =>
             try 
             {
                 const response = await axios.get(`/api/project/view/${id}`)
-                setState({ ...state, id: response.data.project._id, title: response.data.project.title, description: response.data.project.description, authorizeduri: response.data.project.authorizeduri, date: response.data.project.date, isLoaded: true })     
+                setState({ ...state, id: response.data.project._id, title: response.data.project.title, description: response.data.project.description, authorizeduri: response.data.project.authorizeduri, apikey: response.data.project.apikey, date: response.data.project.date, isLoaded: true })     
             } 
             
             catch (error) 
@@ -226,18 +226,17 @@ const ViewProject: React.FC<any> = () =>
                                 <p className='display-4 fw-bold'>{ state.title }</p>
                                 <p className='lead fw-bold'>{ `${ state.date.slice(0,10) }` }</p>
                                 <p className='lead fw-bold text-justify' style={{ overflowWrap: 'break-word' }}>Description: { state.description }</p><br/>
-                                <Link to={`/project/update/${state.id}`} className='btn'>Update Project<i className='fas fa-chevron-right'></i></Link>
-                                <Link to={`/project/delete/${state.id}`} className='btn'>Delete Project<i className='fas fa-chevron-right'></i></Link>
-                                <button className='btn' onClick={ displayAnalytics }>Display Analytics<i className='fas fa-chevron-right'></i></button>
-                            </div>
-                            <div className="mt-4 p-5 tray">
                                 <code>
-                                    API: https://lenstack.herokuapp.com/api/analytics/new/{state.id} <br/>
+                                    API Endpoint: https://lenstack.herokuapp.com/api/analytics/new/{state.id} <br/>
+                                    API Key: {state.apikey} <br/>
                                     HTTP Method: POST <br/>
                                     Request Payload Body Format: JSON <br/>
                                     Request Payload Body Example: { JSON.stringify(dummyRequestPayloadExample) } <br/>
                                     API Usage: Invoke the API from your application with the details, no need to wait for response to come. You can see the analytics created here.
-                                </code>
+                                </code><br/><br/><br/>
+                                <Link to={`/project/update/${state.id}`} className='btn'>Update Project<i className='fas fa-chevron-right'></i></Link>
+                                <Link to={`/project/delete/${state.id}`} className='btn'>Delete Project<i className='fas fa-chevron-right'></i></Link>
+                                <button className='btn' onClick={ displayAnalytics }>Display Analytics<i className='fas fa-chevron-right'></i></button>
                             </div>
                             <Table responsive style={{ display: state.displayTable? "table":"none" }} variant="light">
                                 <thead>
@@ -473,4 +472,4 @@ const DeleteProject: React.FC<any> = () =>
     }
 }
 
-export { CreateProject, ProjectLibrary, ViewProject, UpdateProject, DeleteProject }
+export { NewProject, ProjectLibrary, ViewProject, UpdateProject, DeleteProject }

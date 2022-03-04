@@ -1,6 +1,7 @@
 //Import Statements
 const router = require('express').Router()
 const { check, validationResult } = require('express-validator')
+const { v4: uuidv4 } = require('uuid');
 const auth = require('../middlewares/auth')
 const Project = require('../models/Project')
 const Analytics = require('../models/Analytics')
@@ -8,7 +9,7 @@ const Analytics = require('../models/Analytics')
 //Create Project Route
 router.post
 (
-    '/create',
+    '/new',
 
     auth,
 
@@ -33,14 +34,25 @@ router.post
 
             try 
             {
-                let project = new Project({ creator: req.id, title, description, authorizeduri })
-                await project.save()
-                return res.status(200).json({ msg: 'Project created', project })  
+                const projects = await Project.find({ creator: req.id })
+                
+                if(projects.length < 5)
+                {
+                    const apikey = uuidv4()
+                    let project = new Project({ creator: req.id, title, description, authorizeduri, apikey })
+                    await project.save()
+                    return res.status(200).json({ msg: 'Project created', project }) 
+                }
+
+                else
+                {
+                    return res.status(400).json({ msg: 'Max project count limit reached' })
+                }
             } 
 
             catch (error) 
             {
-                return res.status(500).json({ msg: 'Error creating project' })
+                return res.status(400).json({ msg: 'Error creating project' })
             }
         }
     }

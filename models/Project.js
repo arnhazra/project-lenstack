@@ -28,6 +28,12 @@ const ProjectSchema = new mongoose.Schema
         required: true
     },
 
+    apikey:
+    {
+        type: String,
+        required: true
+    },
+
     date:
     {
         type: Date,

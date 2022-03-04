@@ -36,7 +36,8 @@ router.post
             try 
             {
                 const projectid = req.params.id
-                const project = await Project.findById(projectid)
+                const apikey = req.headers['x-api-key']
+                const project = await Project.findOne({ _id: projectid, apikey })
                 
                 if(project)
                 {
@@ -100,7 +101,6 @@ router.get
             if(project)
             {
                 const { creator } = project
-                console.log(requester, creator.toString())
                 if(requester === creator.toString())
                 {
                     const analytics = await Analytics.find({ projectid }).sort({ date: -1 })
