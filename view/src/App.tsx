@@ -7,7 +7,7 @@ import { Dashboard } from './components/Dashboard'
 import { CloseAccount, UpdateAccount } from './components/Account'
 import OfflineModule from './modules/OfflineModule'
 import ErrorModule from './modules/ErrorModule'
-import { NewProject, DeleteProject, ProjectLibrary, UpdateProject, ViewProject } from './components/Project'
+import { NewProject, DeleteProject, ProjectLibrary, UpdateProject, ViewProject, ProjectAnalytics, APIDoc } from './components/Project'
 
 
 const App : React.FC = () => 
@@ -36,6 +36,8 @@ const App : React.FC = () =>
                     <Route path='/project/new' element = { <NewProject /> } />
                     <Route path='/project/library' element = { <ProjectLibrary /> } />
                     <Route path='/project/view/:id' element = { <ViewProject /> } />
+                    <Route path='/project/apidoc/:id' element = { <APIDoc /> } />
+                    <Route path='/project/analytics/:id' element = { <ProjectAnalytics /> } />
                     <Route path='/project/update/:id' element = { <UpdateProject /> } />
                     <Route path='/project/delete/:id' element = { <DeleteProject /> } />
 
