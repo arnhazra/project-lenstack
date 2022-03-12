@@ -1,7 +1,7 @@
 import { Col, ListGroup, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-const CardModule = (props) => 
+const CardComponent = (props) => 
 {
     return(
         <ListGroup.Item key={ props.id }>
@@ -20,4 +20,4 @@ const CardModule = (props) =>
 }
 
 //Export Statement
-export default CardModule
+export default CardComponent

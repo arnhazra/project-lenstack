@@ -3,10 +3,10 @@ import { Container, Navbar, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 //Navigation Module Component
-const TrayNav = (props: any) =>
+const TrayNavComponent = (props: any) =>
 {
     return(
-        <Navbar variant='light' expand='lg'>
+        <Navbar variant='dark' expand='lg'>
             <Container>
                 <Link to={`/project/view/${props.id}`}>
                     <Navbar.Brand>
@@ -28,4 +28,4 @@ const TrayNav = (props: any) =>
 }
 
 //Export Statement
-export default TrayNav
+export default TrayNavComponent

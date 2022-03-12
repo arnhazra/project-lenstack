@@ -2,8 +2,8 @@
 import React, { Fragment, useState } from 'react'
 import axios from 'axios'
 import { useNavigate, Link, Navigate } from 'react-router-dom'
-import LoadingModule from '../modules/LoadingModule'
-import NavModule from '../modules/NavModule'
+import LoadingComponent from '../shared/LoadingComponent'
+import NavComponent from '../shared/NavComponent'
 import useSession from '../hooks/useSession'
 
 //Update Account Component
@@ -62,7 +62,7 @@ const UpdateAccount: React.FC = () =>
         {
             return (
                 <Fragment>
-                    <NavModule />
+                    <NavComponent />
                     <form className='box' onSubmit = { handleUpdate }>   
                         <p className='boxhead'>Update Account</p>
                         <input type='text' id='name' name='name' placeholder='Change Name' onChange={ (e) => setState({ ...state, name: e.target.value }) } defaultValue={ session.name } autoComplete='off' required minLength={3} maxLength={40} />
@@ -77,7 +77,7 @@ const UpdateAccount: React.FC = () =>
 
         else
         {
-            return <LoadingModule />
+            return <LoadingComponent />
         }   
     }
 }
@@ -119,7 +119,7 @@ const CloseAccount: React.FC = () =>
     {
         return (
             <Fragment>
-                <NavModule />
+                <NavComponent />
                 <form className='box' onSubmit = { handleClose }>   
                     <p className='boxhead'>Close Account</p>
                     <input type='password' name='password' placeholder='Your Password' onChange={ (e) => setState({ ...state, password: e.target.value }) } required autoComplete='off' />

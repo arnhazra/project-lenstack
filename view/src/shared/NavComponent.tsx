@@ -4,12 +4,12 @@ import { Container, Navbar, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 //Navigation Module Component
-const NavModule : React.FC = () =>
+const NavComponent : React.FC = () =>
 {
     if(!localStorage.getItem('token'))
     {
         return(
-            <Navbar variant='light' expand='lg'>
+            <Navbar variant='dark' expand='lg'>
                 <Container style={{ minWidth: '90%' }}>
                     <Link to='/'>
                         <Navbar.Brand>
@@ -32,7 +32,7 @@ const NavModule : React.FC = () =>
     else
     {
         return(
-            <Navbar variant='light' expand='lg'>
+            <Navbar variant='dark' expand='lg'>
                 <Container style={{ minWidth: '90%' }}>
                     <Link to='/dashboard'>
                         <Navbar.Brand>
@@ -53,4 +53,4 @@ const NavModule : React.FC = () =>
 }
 
 //Export Statement
-export default NavModule
+export default NavComponent

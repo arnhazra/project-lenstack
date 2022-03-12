@@ -2,7 +2,7 @@
 import React, { Fragment, useState } from 'react'
 import axios from 'axios'
 import { Navigate, Link, useNavigate } from 'react-router-dom'
-import NavModule from '../modules/NavModule'
+import NavComponent from '../shared/NavComponent'
 
 //Sign Up Component
 const SignUp : React.FC = () =>
@@ -73,7 +73,7 @@ const SignUp : React.FC = () =>
     {
         return(
             <Fragment>
-                <NavModule />
+                <NavComponent />
                 <form className='box' onSubmit = { getOTP } style={{ display: show.step1? 'block': 'none' }}>   
                     <p className='boxhead'>Sign Up</p>
                     <input type='text' name='name' placeholder='Your Name' onChange={ (e) => setState({ ...state, name: e.target.value }) } required autoComplete = {'off'}  minLength={3} maxLength={40} />
@@ -137,7 +137,7 @@ const SignIn : React.FC = () =>
     {
         return (
             <Fragment>
-                <NavModule />
+                <NavComponent />
                 <form className='box' onSubmit = { signin } style={{ display: show.step1? 'block': 'none' }}>   
                     <p className='boxhead'>Sign In</p>
                     <input type='email' name='email' placeholder='Email Address' onChange={ (e) => setState({ ...state, email: e.target.value }) } required autoComplete = {'off'}/>
@@ -219,7 +219,7 @@ const PasswordReset : React.FC = () =>
     {
         return (
             <Fragment>
-                <NavModule />
+                <NavComponent />
                 <form className='box' onSubmit = { getOTP } style={{ display: show.step1? 'block': 'none' }}>   
                     <p className='boxhead'>Reset Password</p>
                         <input type='email' name='email' placeholder='Email Address' onChange={ (e) => setState({ ...state, email: e.target.value }) } required autoComplete = {'off'}  />

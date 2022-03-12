@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { Fragment, useEffect, useState } from 'react';
-import { Container, ListGroup, Row, Table } from 'react-bootstrap';
+import { Card, Container, ListGroup, Row, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import useSession from '../hooks/useSession';
-import CardModule from '../modules/CardModule';
-import ErrorModule from '../modules/ErrorModule';
-import LoadingModule from '../modules/LoadingModule';
-import NavModule from '../modules/NavModule';
-import TrayNav from '../modules/TrayNav';
+import CardComponent from '../shared/CardComponent';
+import ErrorComponent from '../shared/ErrorComponent';
+import LoadingComponent from '../shared/LoadingComponent';
+import NavComponent from '../shared/NavComponent';
+import TrayNavComponent from '../shared/TrayNavComponent';
 
 const NewProject: React.FC<any> = () => 
 {
@@ -56,7 +56,7 @@ const NewProject: React.FC<any> = () =>
     {
         return (
             <Fragment>
-                <NavModule/>
+                <NavComponent/>
                 <form className='box' onSubmit={ handleSubmit }> 
                     <p className='boxhead'>New Project</p>
                     <input type='text' name='title' placeholder='Project Title' onChange={ (e) => setState({ ...state, title: e.target.value }) } autoComplete='off' required />
@@ -94,7 +94,7 @@ const ProjectLibrary: React.FC<any> = () =>
         })()      
     }, [])
 
-    const projectItems = state.projects.map((item:any) => <CardModule id={ item._id } title={ item.title } key={ item._id } />)
+    const projectItems = state.projects.map((item:any) => <CardComponent id={ item._id } title={ item.title } key={ item._id } />)
 
     //JSX
     if(session.hasError)
@@ -110,7 +110,7 @@ const ProjectLibrary: React.FC<any> = () =>
             {
                 return(
                     <Fragment>
-                        <NavModule/>
+                        <NavComponent/>
                         <div className="box">
                             <p className="boxhead">No Projects</p>
                             <Link to="/project/new" className="btn">New Project<i className="fas fa-chevron-right"></i></Link>
@@ -123,7 +123,7 @@ const ProjectLibrary: React.FC<any> = () =>
             {
                 return(
                     <Fragment>
-                        <NavModule/>
+                        <NavComponent/>
                         <Container className='mt-4'>
                             <ListGroup>
                                 { projectItems }
@@ -136,7 +136,7 @@ const ProjectLibrary: React.FC<any> = () =>
     
         else
         {
-            return <LoadingModule />
+            return <LoadingComponent />
         }
     }
 }
@@ -176,7 +176,7 @@ const ViewProject: React.FC<any> = () =>
     {
         if(state.error)
         {
-            return(<ErrorModule />)
+            return(<ErrorComponent />)
         }
     
         else
@@ -185,9 +185,9 @@ const ViewProject: React.FC<any> = () =>
             {
                 return(
                     <Fragment>
-                        <NavModule />
+                        <NavComponent />
                         <Container className='mt-4'>
-                            <TrayNav id={ id } />
+                            <TrayNavComponent id={ id } />
                             <div className='mt-4 p-5 tray'>
                                 <Link to='/project/library' className='btn'><i className='fas fa-arrow-left'></i></Link>
                                 <p className='display-4 fw-bold'>{ state.title }</p>
@@ -201,7 +201,7 @@ const ViewProject: React.FC<any> = () =>
             
             else
             {
-                return <LoadingModule />
+                return <LoadingComponent />
             }
         }
     }
@@ -248,7 +248,7 @@ const APIDoc: React.FC<any> = () =>
     {
         if(state.error)
         {
-            return(<ErrorModule />)
+            return(<ErrorComponent />)
         }
     
         else
@@ -257,9 +257,9 @@ const APIDoc: React.FC<any> = () =>
             {
                 return(
                     <Fragment>
-                        <NavModule />
+                        <NavComponent />
                         <Container className='mt-4'>
-                            <TrayNav id={ state.id } />
+                            <TrayNavComponent id={ state.id } />
                             <div className='mt-4 p-5 tray'>
                                 <code>
                                     HTTP Method: POST <br/>
@@ -278,7 +278,7 @@ const APIDoc: React.FC<any> = () =>
             
             else
             {
-                return <LoadingModule />
+                return <LoadingComponent />
             }
         }
     }
@@ -335,7 +335,7 @@ const ProjectAnalytics: React.FC<any> = () =>
     {
         if(state.error)
         {
-            return(<ErrorModule />)
+            return(<ErrorComponent />)
         }
     
         else
@@ -344,9 +344,9 @@ const ProjectAnalytics: React.FC<any> = () =>
             {
                 return(
                     <Fragment>
-                        <NavModule />
+                        <NavComponent />
                         <Container className='mt-4'>
-                            <TrayNav id={ id } />
+                            <TrayNavComponent id={ id } />
                             <Table className='mt-4' responsive variant="light">
                                 <thead>
                                     <tr>
@@ -369,7 +369,7 @@ const ProjectAnalytics: React.FC<any> = () =>
             
             else
             {
-                return <LoadingModule />
+                return <LoadingComponent />
             }
         }
     }
@@ -441,7 +441,7 @@ const UpdateProject: React.FC<any> = () =>
         if(!state.isLoaded)
         {
             return(
-                <LoadingModule />
+                <LoadingComponent />
             )
         }
 
@@ -450,7 +450,7 @@ const UpdateProject: React.FC<any> = () =>
             if(state.hasError)
             {
                 return(
-                    <ErrorModule />
+                    <ErrorComponent />
                 )
             }
 
@@ -458,9 +458,9 @@ const UpdateProject: React.FC<any> = () =>
             {
                 return (
                     <Fragment>
-                        <NavModule/>
+                        <NavComponent/>
                         <Container className='mt-4'>
-                            <TrayNav id={ state.id } />
+                            <TrayNavComponent id={ state.id } />
                             <form className='tray mt-4 p-5' onSubmit={ handleSubmit }> 
                                 <p className='boxhead fw-bold'>Update Project</p>
                                 <input type='text' name='title' placeholder='Project Title' onChange={ (e) => setState({ ...state, title: e.target.value }) } value= { state.title } autoComplete='off' required />
@@ -552,7 +552,7 @@ const DeleteProject: React.FC<any> = () =>
         if(!state.isLoaded)
         {
             return(
-                <LoadingModule />
+                <LoadingComponent />
             )
         }
     
@@ -561,7 +561,7 @@ const DeleteProject: React.FC<any> = () =>
             if(state.hasError)
             {
                 return(
-                    <ErrorModule />
+                    <ErrorComponent />
                 )
             }
 
@@ -569,9 +569,9 @@ const DeleteProject: React.FC<any> = () =>
             {
                 return (
                     <Fragment>
-                        <NavModule/>
+                        <NavComponent />
                         <Container className='mt-4'>
-                            <TrayNav id={ id } />
+                            <TrayNavComponent id={ id } />
                             <form className='tray mt-4 p-5' onSubmit={ handleSubmit }> 
                                 <p className='boxhead fw-bold'>Delete Project</p>
                                 <input type='text' name='useript' placeholder='Type "Delete Project"' onChange={ (e) => setState({ ...state, useript: e.target.value }) } autoComplete='off' required />

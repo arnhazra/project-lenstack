@@ -5,9 +5,9 @@ import { Home } from './components/Home'
 import { SignUp, SignIn, SignOut, PasswordReset } from './components/Identity'
 import { Dashboard } from './components/Dashboard'
 import { CloseAccount, UpdateAccount } from './components/Account'
-import OfflineModule from './modules/OfflineModule'
-import ErrorModule from './modules/ErrorModule'
 import { NewProject, DeleteProject, ProjectLibrary, UpdateProject, ViewProject, ProjectAnalytics, APIDoc } from './components/Project'
+import ErrorComponent from './shared/ErrorComponent'
+import OfflineComponent from './shared/OfflineComponent'
 
 
 const App : React.FC = () => 
@@ -16,7 +16,7 @@ const App : React.FC = () =>
 
     if(offline)
     {
-        return <OfflineModule />
+        return <OfflineComponent />
     }
 
     else
@@ -43,7 +43,7 @@ const App : React.FC = () =>
 
                     <Route path='/account' element = { <UpdateAccount /> } />
                     <Route path='/account/close' element = { <CloseAccount /> } />
-                    <Route path='*' element = { <ErrorModule /> } />
+                    <Route path='*' element = { <ErrorComponent /> } />
                 </Routes>
             </BrowserRouter>
         )

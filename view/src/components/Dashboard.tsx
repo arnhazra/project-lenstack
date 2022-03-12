@@ -2,9 +2,9 @@
 import React, { Fragment, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { Navigate } from 'react-router-dom'
-import LoadingModule from '../modules/LoadingModule'
+import LoadingComponent from '../shared/LoadingComponent'
 import useSession from '../hooks/useSession'
-import NavModule from '../modules/NavModule'
+import NavComponent from '../shared/NavComponent'
 import { Link } from 'react-router-dom'
 import greetingTime from 'greeting-time'
 
@@ -27,7 +27,7 @@ const Dashboard: React.FC<any> = () =>
         {
             return (
                 <Fragment>
-                    <NavModule />
+                    <NavComponent />
                     <Container>
                         <div className='cover covertext'>
                             <p className='display-1 fw-bold'>{ greet + ', ' + session.name.split(' ')[0]  }</p>
@@ -45,7 +45,7 @@ const Dashboard: React.FC<any> = () =>
 
         else
         {
-            return <LoadingModule />
+            return <LoadingComponent />
         }   
     }
 }

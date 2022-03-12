@@ -2,7 +2,7 @@
 import React from 'react'
 
 //Offline Module Component
-const OfflineModule : React.FC = () => 
+const OfflineComponent : React.FC = () => 
 {
     return (
         <div className='box text-center'>
@@ -14,4 +14,4 @@ const OfflineModule : React.FC = () =>
 }
 
 //Export Statement
-export default OfflineModule
+export default OfflineComponent

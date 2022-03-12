@@ -5,6 +5,7 @@ const { check, validationResult } = require('express-validator')
 const auth = require('../middlewares/auth')
 const User = require('../models/User')
 const Project = require('../models/Project')
+const Analytics = require('../models/Analytics')
 const router = express.Router()
 
 //Update Account Route
@@ -73,6 +74,7 @@ router.post
                 if(isPasswordMatching)
                 {
                     await Project.deleteMany({ creator: req.id })
+                    await Analytics.deleteMany({ creator: req.id })
                     await User.findByIdAndDelete(req.id)
                     return res.status(200).json({ msg: 'Account close success' })
                 }

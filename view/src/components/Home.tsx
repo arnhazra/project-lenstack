@@ -1,9 +1,8 @@
 //Import Statements
 import { Navigate, Link } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
-import React, { Fragment, useEffect } from 'react'
-import NavModule from '../modules/NavModule'
-import axios from 'axios'
+import React, { Fragment } from 'react'
+import NavComponent from '../shared/NavComponent'
 
 //Home Component
 const Home : React.FC = () =>
@@ -18,7 +17,7 @@ const Home : React.FC = () =>
     {
         return(
             <Fragment>
-                <NavModule />
+                <NavComponent />
                 <Container>
                     <div className='cover covertext'>
                         <p className='display-1 fw-bold'>

@@ -1,9 +1,9 @@
 //Import Statements
 import React, { Fragment } from 'react'
-import NavModule from './NavModule'
+import NavModule from './NavComponent'
 
 //Loading Module Component
-const LoadingModule : React.FC = () =>
+const LoadingComponent : React.FC = () =>
 {
     return(
         <Fragment>
@@ -16,4 +16,4 @@ const LoadingModule : React.FC = () =>
 }
 
 //Export Statement
-export default LoadingModule
+export default LoadingComponent

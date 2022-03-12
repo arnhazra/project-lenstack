@@ -1,10 +1,10 @@
 //Import Statements
 import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
-import NavModule from './NavModule'
+import NavModule from './NavComponent'
 
 //Error Module Component
-const ErrorModule : React.FC = (props : any) =>
+const ErrorComponent : React.FC = (props : any) =>
 {
     return (
         <Fragment>
@@ -18,4 +18,4 @@ const ErrorModule : React.FC = (props : any) =>
 }
 
 //Export Statement
-export default ErrorModule
+export default ErrorComponent
