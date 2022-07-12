@@ -20,9 +20,8 @@ const Home : React.FC = () =>
                 <NavComponent />
                 <Container>
                     <div className='cover covertext'>
-                        <p className='display-1 fw-bold'>
-                            Your analytics, from the web <br/>
-                            on the cloud
+                        <p className='display-2 fw-bold'>
+                            Your analytics, <br/> from the web <br/> on the cloud
                         </p>
                         <p className='lead my-4 fw-bold'>
                             Limitless analytics with realtime insights. Analytics for your apps & services. <br/>Start measuring with a free account and 10 free projects.

@@ -30,7 +30,7 @@ const Dashboard: React.FC<any> = () =>
                     <NavComponent />
                     <Container>
                         <div className='cover covertext'>
-                            <p className='display-1 fw-bold'>{ greet + ', ' + session.name.split(' ')[0]  }</p>
+                            <p className='display-2 fw-bold'>{ greet + ', ' + session.name.split(' ')[0]  }</p>
                             <p className='lead my-4 fw-bold'>
                                 Lenstack Analytics lets you measure your application usage/traffic <br /> 
                                 using API endpoints and display in real time on your project dashboard.
